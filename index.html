@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>越限跑：從北京到香港，從堅持到無限 | 数据新闻</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Noto Sans TC', 'Microsoft JhengHei', 'Segoe UI', sans-serif;
+        }
+       
+        body {
+            background-color: #fefefe;
+            color: #333;
+            line-height: 1.8;
+            font-size: 18px;
+        }
+       
+        .article-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+       
+        /* 文章標題區域 */
+        .article-header {
+            padding: 4rem 0 2rem;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 3rem;
+        }
+       
+        .article-title {
+            font-size: 2.8rem;
+            line-height: 1.3;
+            color: #1a1a1a;
+            margin-bottom: 1rem;
+            font-weight: 800;
+        }
+       
+        .article-subtitle {
+            font-size: 1.4rem;
+            color: #666;
+            margin-bottom: 1.5rem;
+            font-weight: 400;
+        }
+       
+        .article-meta {
+            display: flex;
+            color: #888;
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+        }
+       
+        .meta-item {
+            margin-right: 2rem;
+        }
+       
+        .meta-item i {
+            margin-right: 0.5rem;
+            color: #e63946;
+        }
+       
+        /* 文章內容區域 */
+        .article-content {
+            padding-bottom: 4rem;
+        }
+       
+        /* 文字段落 */
+        .article-paragraph {
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            text-align: justify;
+        }
+       
+        .article-paragraph.lead {
+            font-size: 1.3rem;
+            font-weight: 500;
+            color: #222;
+            border-left: 4px solid #e63946;
+            padding-left: 1.5rem;
+            margin: 3rem 0;
+        }
+       
+        /* 標題層級 */
+        .article-heading {
+            margin: 3.5rem 0 1.5rem;
+            color: #1a1a1a;
+            font-weight: 700;
+        }
+       
+        .article-heading.h2 {
+            font-size: 2rem;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 0.8rem;
+            color: #1d3557;
+        }
+       
+        .article-heading.h3 {
+            font-size: 1.6rem;
+            margin-top: 2.5rem;
+            color: #457b9d;
+        }
+       
+        .article-heading.h4 {
+            font-size: 1.3rem;
+            margin-top: 2rem;
+            color: #333;
+        }
+       
+        /* 圖片區域 */
+        .article-image {
+            margin: 2.5rem 0;
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s, transform 0.8s;
+        }
+       
+        .article-image.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+       
+        .article-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+       
+        .image-caption {
+            font-size: 0.9rem;
+            color: #666;
+            text-align: center;
+            margin-top: 0.8rem;
+            font-style: italic;
+            line-height: 1.5;
+        }
+       
+        /* 圖表區域 */
+        .article-chart {
+            margin: 3rem 0;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s, transform 0.8s;
+        }
+       
+        .article-chart.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+       
+        .chart-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #222;
+        }
+       
+        .chart-wrapper {
+            height: 320px;
+            position: relative;
+        }
+       
+        /* Flourish embed 調整 */
+        .flourish-embed {
+            width: 100%;
+            height: 500px;
+            border: none;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+       
+        /* 引用區域 */
+        .article-quote {
+            margin: 2.5rem 0;
+            padding: 2rem 2rem 2rem 3rem;
+            background-color: #f1faee;
+            border-left: 5px solid #457b9d;
+            border-radius: 4px;
+            position: relative;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: opacity 0.8s, transform 0.8s;
+        }
+       
+        .article-quote.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+       
+        .quote-text {
+            font-size: 1.2rem;
+            font-weight: 500;
+            color: #1d3557;
+            margin-bottom: 1rem;
+        }
+       
+        .quote-author {
+            font-size: 0.95rem;
+            color: #666;
+            text-align: right;
+            font-style: italic;
+        }
+       
+        /* 數據統計卡片 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+       
+        .stat-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border-top: 4px solid #e63946;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s;
+        }
+       
+        .stat-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+       
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #1d3557;
+            margin-bottom: 0.5rem;
+        }
+       
+        .stat-label {
+            font-size: 0.95rem;
+            color: #666;
+        }
+       
+        /* 列表樣式 */
+        .article-list {
+            margin: 1.5rem 0 1.5rem 2rem;
+        }
+       
+        .article-list li {
+            margin-bottom: 0.8rem;
+            padding-left: 0.5rem;
+        }
+       
+        /* 時間軸樣式 */
+        .timeline {
+            margin: 3rem 0;
+            position: relative;
+        }
+       
+        .timeline-item {
+            margin-bottom: 2.5rem;
+            padding-left: 2rem;
+            position: relative;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.6s;
+        }
+       
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+       
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #e63946;
+        }
+       
+        .timeline-date {
+            font-weight: 700;
+            color: #1d3557;
+            margin-bottom: 0.3rem;
+        }
+       
+        .timeline-content {
+            color: #555;
+        }
+       
+        /* 案例框 */
+        .case-study {
+            margin: 2.5rem 0;
+            padding: 2rem;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            border-left: 5px solid #e63946;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s;
+        }
+       
+        .case-study.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+       
+        .case-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #1d3557;
+            margin-bottom: 1rem;
+        }
+       
+        /* 響應式調整 */
+        @media (max-width: 768px) {
+            .article-container {
+                padding: 0 15px;
+            }
+           
+            .article-title {
+                font-size: 2.2rem;
+            }
+           
+            .article-subtitle {
+                font-size: 1.2rem;
+            }
+           
+            .article-paragraph {
+                font-size: 1.05rem;
+            }
+           
+            .article-paragraph.lead {
+                font-size: 1.15rem;
+            }
+           
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+           
+            .chart-wrapper {
+                height: 250px;
+            }
+           
+            .flourish-embed {
+                height: 400px;
+            }
+        }
+       
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+           
+            .article-heading.h2 {
+                font-size: 1.7rem;
+            }
+           
+            .flourish-embed {
+                height: 350px;
+            }
+        }
+       
+        /* 動畫定義 */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+       
+        .fade-in {
+            animation: fadeIn 1s ease-out;
+        }
+       
+        /* Google Maps iframe 樣式 */
+        .route-map-iframe {
+            width: 100%;
+            height: 500px;
+            border: 0;
+            border-radius: 8px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+            margin: 2.5rem 0;
+        }
+
+        /* 路線規劃表樣式 */
+        .route-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2.5rem 0;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s, transform 0.8s;
+        }
+
+        .route-table.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .route-table th, .route-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+            white-space: nowrap;
+        }
+
+        .route-table th {
+            background-color: #a8dadc;
+            font-weight: 600;
+            color: #1d3557;
+        }
+
+        .route-table th:nth-child(1), .route-table td:nth-child(1) {
+            width: 12%;
+        }
+
+        .route-table th:nth-child(2), .route-table td:nth-child(2) {
+            width: 18%;
+        }
+
+        .route-table th:nth-child(3), .route-table td:nth-child(3) {
+            width: 15%;
+        }
+
+        .route-table th:nth-child(4), .route-table td:nth-child(4) {
+            width: 25%;
+        }
+
+        .route-table th:nth-child(5), .route-table td:nth-child(5) {
+            width: 30%;
+        }
+
+        .route-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .route-table .distance {
+            background-color: #e9f7ef;
+            border-radius: 20px;
+            padding: 0.5rem 1rem;
+            display: inline-block;
+            font-weight: 600;
+            color: #27ae60;
+        }
+
+        .route-table-caption {
+            font-size: 0.9rem;
+            color: #666;
+            text-align: center;
+            margin-top: 0.8rem;
+            font-style: italic;
+        }
+
+        /* 訓練與補給模式色塊 */
+        .article-block {
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s;
+        }
+
+        .article-block.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .article-block.red {
+            background-color: #f8ebeb;
+            border-left: 5px solid #e63946;
+        }
+
+        .article-block.yellow {
+            background-color: #fffbeb;
+            border-left: 5px solid #f1c40f;
+        }
+
+        .article-block.blue {
+            background-color: #ebf5fb;
+            border-left: 5px solid #3498db;
+        }
+
+        .article-block.green {
+            background-color: #e9f7ef;
+            border-left: 5px solid #27ae60;
+        }
+
+        /* 傷病圖片風格調整 */
+        .injury-image {
+            margin: 1rem 0;
+            padding: 1rem;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+        }
+
+        .injury-image img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+
+        /* 视频占位符样式 */
+        .video-placeholder {
+            margin: 2.5rem 0;
+            background: linear-gradient(to right, #a8dadc, #457b9d);
+            border-radius: 4px;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s, transform 0.8s;
+        }
+
+        .video-placeholder.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="article-container">
+        <!-- 文章標題區域 -->
+        <header class="article-header fade-in">
+            
+           
+            <h1 class="article-title">3,000公里的越限跑<br>從北京跑到香港，你需要知道什麼</h1>
+            <p class="article-subtitle">兩名主跑者與九名中學生組成的跑者團隊，3394公里的人類身體的極端耐力挑战</p>
+            <div class="article-meta">
+                <div class="meta-item"><i class="fas fa-user-edit"></i> 調查報導：劉慈、王之琪、魏言芳如、蘇綺藍、邹曜璘</div>
+                <div class="meta-item"><i class="fas fa-calendar-alt"></i> 2025年12月19日</div>
+                <div class="meta-item"><i class="fas fa-clock"></i> 閱讀時間：12分鐘</div>
+            </div>
+        </header>
+       
+    
+
+        <!-- 文章內容 -->
+        <main class="article-content">
+            <!-- 導語 -->
+            <p class="article-paragraph lead">
+                2025年10月15日至12月13日，一項名為“越限跑”的極限挑戰在中國東部完成。兩名主跑者與九名中學生組成的團隊，用60天時間從北京跑至香港，實際里程達到3394公里，途經49個城市。這不僅是一次地理上的穿越，更是一場對人體極限耐力的挑戰。團隊完整記錄了身體如何適應持續高負荷、如何在傷病邊緣進行修復、以及在心理壓力下保持前進的過程，充分展現了運動科學與團隊協作的實際應用。
+            </p>
+           
+            <!-- 數據統計卡片 -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">62</div>
+                    <div class="stat-label">挑戰天數</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">3,394</div>
+                    <div class="stat-label">總里程 (公里)</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">49</div>
+                    <div class="stat-label">途經城市</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">11</div>
+                    <div class="stat-label">團隊成員</div>
+                </div>
+            </div>
+           
+            <h2 class="article-heading h2">路線設計：挑戰的藍圖</h2>
+           
+            <h3 class="article-heading h3">1. 路線一覽</h3>
+           
+            <!-- 全程實際跑步軌跡圖（先放） -->
+            <div class="article-chart">
+                <h3 class="chart-title">全程實際跑步軌跡圖</h3>
+                <div class="flourish-embed flourish-map" data-src="visualisation/26870676"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/26870676/thumbnail" width="100%" alt="map visualization" /></noscript></div>
+            </div>
+           
+            <!-- 海拔圖 -->
+            <div class="article-chart">
+                <h3 class="chart-title">全程海拔變化</h3>
+                <div class="flourish-embed flourish-chart" data-src="visualisation/26880942"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/26880942/thumbnail" width="100%" alt="chart visualization" /></noscript></div>
+            </div>
+           
+            
+            <p class="article-paragraph">
+                本次越限跑的路線，並非兩點之間的最短路徑，而是多重現實條件平衡下的結果。隊伍在62天內完成了約3100公里的旅程，比北京至香港的直線距離多出約600公里。
+            </p>
+            <p class="article-paragraph">
+                路線延長的主要考量源於“旅遊跑”的構想。團隊明確希望納入四個地理與文化地標：泰山、南京長江大橋、黃山及沿海路段。為了抵達這些地點，路線從常規的約2500公里延伸至約3100公里。例如，在南京段，團隊為穿越長江大橋專門規劃了約4-5公里的路線。
+            </p>
+            
+            <!-- 路段劃分圖表放在這裡，這一段文字的前面 -->
+            <figure class="article-image">
+                <table class="route-table">
+                    <thead>
+                        <tr>
+                            <th>路段劃分</th>
+                            <th>起止點</th>
+                            <th>距離</th>
+                            <th>關鍵途經絕地區</th>
+                            <th>主要地形與核心挑戰</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>第一段</td>
+                            <td>北京—濟南</td>
+                            <td><span class="distance">約530公里 ↓</span></td>
+                            <td>北京、天津、河北</td>
+                            <td>華北平原，初期體能分配與節奏建立</td>
+                        </tr>
+                        <tr>
+                            <td>第二段</td>
+                            <td>濟南—南京</td>
+                            <td><span class="distance">約630公里 ↓</span></td>
+                            <td>泰安(泰山)、南京、宿遷</td>
+                            <td>引入鷂峯爬升(泰山)，過渡至江淮平原</td>
+                        </tr>
+                        <tr>
+                            <td>第三段</td>
+                            <td>南京—福州</td>
+                            <td><span class="distance">約950公里 ↓</span></td>
+                            <td>馬鞍山、黄山、南平</td>
+                            <td>江南丘陵至閩東山地，景觀爬升主要階段，地形最複雜</td>
+                        </tr>
+                        <tr>
+                            <td>第四段</td>
+                            <td>福州—香港</td>
+                            <td><span class="distance">約900公里 ↓</span></td>
+                            <td>泉州、廈門、潮山、深圳</td>
+                            <td>沿海丘陵與城市路段，應對濕熱氣候與交通，終點衝刺</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <figcaption class="route-table-caption">路線規劃分布圖</figcaption>
+            </figure>
+
+
+
+            <h3 class="article-heading h3">2. 路線設計的核心標準和原則</h3>
+
+           
+
+
+            <p class="article-paragraph">
+                這並非一場簡單的越野賽，而是一次長達62天、規模近20人的團隊行動。因此，路線設計的首要原則是 “距離與住宿點的匹配” 。每日的終點必須是能夠提供充足、乾淨、安靜且最好包含早餐的住宿點——這比追求最短距離或最美風景更為關鍵。
+
+             <figure class="article-image">
+                <img src="8.png" alt="景觀">
+                <figcaption class="image-caption">沿途特色著名景觀分布圖</figcaption>
+            </figure>   
+
+
+
+            </p>
+            <p class="article-paragraph">
+                路線設計者張朝順亦承認此次設計的難度：路線極長，且無先例可循，這是他首次設計長距離奔跑路線。他基於過往從香港騎行至北京的領隊經驗，規劃了這場漫長的耐力跑。
+            </p>
+            <p class="article-paragraph">
+                基於主跑團隊的需求，總距離被反向推導而出：以“跑五休一”的節奏，在62天內完成3000餘公里，意味著約50個奔跑日，每日目標設定在60公里左右。這個數字的實質是：從一個可行的住宿點，抵達下一個可行的住宿點。所有路徑規劃，都圍繞著這兩個點之間的連線展開。
+            </p>
+            <p class="article-paragraph">
+                隊伍包含9名學生、教師、跑者、攝影師及司機，每日需協調多達15-16人的跨省交通與住宿。絕大多數夜晚，團隊入住性價比較高的酒店，標準約為每人150元人民幣。在山區，住宿條件降為合住房屋或簡易旅館。在奔跑到安徽白地鎮時，因無法直達黃山腳下，全隊入住了當地唯一的家庭旅社。
+            </p>
+            <p class="article-paragraph">
+                安全是另一項核心考量。由於全程路線過長，國道不可避免地成為主要路徑。在未封路的行車道上奔跑存在安全隱患，但路線設計者朝順認為：“人本身是靈活且能隨機應變的。”因此，國道路線也成為這場越限跑中一個標誌性的挑戰。
+            </p>
+            <p class="article-paragraph">
+                起初，團隊隨車流方向奔跑，但很快發現了安全隱患：即使緊靠路邊，過往車輛仍可能存在視野盲區。為此，朝順制定了一項關鍵策略：在國道、省道上逆向奔跑。面向來車方向，駕駛員可以提前看到跑者；跑者也能向車輛揮手示意，避免因盲區產生的危險。
+            </p>
+            <p class="article-paragraph">
+                基於對這條超長且無先例路線的不確定性，此次越限跑並未採用傳統的全程固定規劃。每日奔跑計劃被分解為可管理的小單元：“只看下一個5公里，午飯是中點，到酒店是終點。”
+            </p>
+            <p class="article-paragraph">
+                實際執行中，計劃也為現實做出了讓步。在福建，因初始規劃的山路沿線住宿條件欠佳，團隊果斷調整，增加了城市道路的比例以確保後勤保障。
+            </p>
+            <p class="article-paragraph">
+                因此，路線圖成為一張動態網路，其核心是在確保安全住宿的前提下，將3100公里均勻分解為約62個“酒店到酒店”的日間段落。
+            </p>
+           
+             <!-- 酒店地图（再放） -->
+            <iframe class="route-map-iframe" src="https://www.google.com/maps/d/u/0/embed?mid=1RvDSVO0NKSLswn0GwiZmCBRLubOw2gA&ehbc=2E312F" allowfullscreen="" loading="lazy"></iframe>
+            
+           
+
+
+
+
+
+            <h2 class="article-heading h2">氣候環境：跨越緯度的季節挑戰</h2>
+           
+            <p class="article-paragraph">
+                隊伍在62天內經歷了從北溫帶到亞熱帶的完整氣候梯度。氣溫跨度從0°C到28°C，濕度從北方的40-60%升至福建沿海的85%以上，構成持續的外在生理壓力。
+            </p>
+           
+            <!-- 氣溫圖（Flourish） -->
+            <div class="article-chart">
+                <h3 class="chart-title">全程氣溫變化趨勢</h3>
+                <div class="flourish-embed flourish-chart" data-src="visualisation/26863928"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/26863928/thumbnail" width="100%" alt="chart visualization" /></noscript></div>
+            </div>
+           
+            <!-- 濕度圖（Flourish） -->
+            <div class="article-chart">
+                <h3 class="chart-title">全程濕度變化趨勢</h3>
+                <div class="flourish-embed flourish-chart" data-src="visualisation/26954084"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/26954084/thumbnail" width="100%" alt="chart visualization" /></noscript></div>
+            </div>
+           
+            <!-- 空氣污染圖（Flourish） -->
+            <div class="article-chart">
+                <h3 class="chart-title">全程空氣質量（AQI）分佈</h3>
+                <div class="flourish-embed flourish-map" data-src="visualisation/26963419"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/visualisation/26963419/thumbnail" width="100%" alt="map visualization" /></noscript></div>
+            </div>
+           
+            <h3 class="article-heading h3">具體氣候挑戰序列</h3>
+           
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">10月中旬（北京出發）</div>
+                    <div class="timeline-content">氣溫11-20°C，晴間多雲，體感乾燥。團隊適應北方秋季氣候，調整水分補充策略。</div>
+                </div>
+               
+                <div class="timeline-item">
+                    <div class="timeline-date">10月21日（河北東光縣）</div>
+                    <div class="timeline-content">遭遇行程最低溫0°C，伴隨陰雨，身體保暖與防滑成為焦點。團隊首次使用全套防寒裝備。</div>
+                </div>
+               
+                <div class="timeline-item">
+                    <div class="timeline-date">11月上旬（江蘇、安徽）</div>
+                    <div class="timeline-content">氣溫回升，但11月7日南京遭遇暴雨，氣溫約21°C，雨天路況與能見度構成挑戰。單日進度僅完成預定的60%。</div>
+                </div>
+               
+                <div class="timeline-item">
+                    <div class="timeline-date">11月下旬（福建）</div>
+                    <div class="timeline-content">氣溫升至28°C，濕度常超85%，體感悶熱，排汗散熱效率降低，體能消耗加劇。團隊調整為清晨和傍晚跑步，避開中午高溫。</div>
+                </div>
+               
+                <div class="timeline-item">
+                    <div class="timeline-date">12月中旬（抵港）</div>
+                    <div class="timeline-content">氣溫16-22°C，氣候宜人。團隊在相對舒適的環境中完成最後階段挑戰。</div>
+                </div>
+            </div>
+           
+            <p class="article-paragraph">
+                在個別空氣污染（AQI升高）明顯的工業路段，團隊被迫降低跑動強度，增加步行比例，導致單日有效行進時間曾延長至約14小時。環境因子的綜合波動，要求身體代謝與補給策略進行近乎每日的實時調整。
+            </p>
+           
+           
+           
+            <h2 class="article-heading h2">身體變化：損傷案例、生理機制與適應轉折</h2>
+           
+            <div class="case-study">
+                <div class="case-title">案例一：范老師的「第四日損傷」與超量恢復</div>
+                <p class="article-paragraph">
+                    開跑第四天（10月18日），范老師的腳踝與跟腱出現損傷，檢查顯示存在局部粘連與輕微撕裂。為不影響團隊行程，他仍堅持完成每日跑量，僅以噴藥、按摩等常規方式處理。
+                </p>
+                <p class="article-paragraph">
+                    幾天後在南京接受專業評估，確認為非致殘性跟腱損傷。他調整跑姿，並在短距離內將配速提升至4:50-5:00/km，逐步恢復訓練。
+                </p>
+                <p class="article-paragraph">
+                    這種強度已超出日常運動負荷閾值。范老師的損傷本質是下肢肌腱與肌肉無法立即承接日均60公里的反覆牽拉，屬於典型的「過度使用性損傷」。
+                </p>
+                <p class="article-paragraph">
+                    適應與轉變：損傷後第7日開始好轉，一個月後完全康復。令人意外的是，這次受傷成為身體適應的契機：
+                </p>
+                <p class="article-paragraph">
+                    康復後身體形成運動依賴，每日需運動3-4小時；飲食從初期食量劇增，轉為後期少量飲食即可支撐長距離跑
+                </p>
+            </div>
+           
+            <div class="case-study">
+                <div class="case-title">案例二：Jo的雙足腫脹與系統性管理</div>
+                <p class="article-paragraph">
+                    素食主跑者Jo在挑戰第二週出現雙足嚴重腫脹，尤其在傍晚抵達住宿點時最為明顯。這是由於長時間站立和跑步導致靜脈回流不暢，加上高鹽飲食引起的水鈉滯留。
+                </p>
+                <p class="article-paragraph">
+                    管理策略包括：在遠程指導下，他通過冰敷、抬腿與壓力包紮的系統性管理，腫脹問題得到控制，未影響後續挑戰。 兩位跑者日均跑量60多公里，需要跨出超過6萬步。邁出的每一步，都要承受
+身體的全部重量和加速度。進入後半程後，彼此的交流明顯增加，疼痛管
+理也更為積極，整體狀態漸入佳境，跑步過程也愈發順利。
+                </p>
+            </div>
+           
+        
+
+            <!-- 或保持16:9比例 -->
+            <div style="position: relative; padding-bottom: 56.25%; height: 0;">
+                <video style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" 
+           controls>
+                    <source src="10.mp4" type="video/mp4">
+                </video>
+            </div>
+
+           
+
+
+
+
+            <!-- 康復訓練圖（原第三張） -->
+            <figure class="article-image">
+                <img src="7.jpg" alt="團隊進行康復訓練">
+                <figcaption class="image-caption">隨隊物理治療師為隊員進行恢復性訓練，預防運動損傷</figcaption>
+            </figure>
+           
+
+
+
+
+
+            <h2 class="article-heading h2">團隊策略：高負荷下的日常循環</h2>
+           
+            <h3 class="article-heading h3">1. 每日跑步陣營</h3>
+           
+            <p class="article-paragraph">
+                團隊採用「滾動前進」模式，每天分為三個跑步時段：清晨（2-3人小組）、上午（主力團隊）、下午（輪換團隊）。這種安排確保了24小時內始終有人在路上，同時讓每位成員有足夠的休息時間。
+            </p>
+           
+            <h3 class="article-heading h3">2. 訓練與補給模式</h3>
+           
+            <!-- 色塊區別每個部分 -->
+            <div class="article-block red">
+                <p class="quote-text">05:00 喚醒與系統激活：起床，進行長達1.5小時的結構化熱身。流程嚴格包括：動態拉伸、彈力帶針對性地激活髖關節與膝關節穩定性肌群、泡沫軸對股四頭肌、膕繩肌、小腿三頭肌進行筋膜放鬆，最後使用震動滾軸進行深度按壓與神經肌肉喚醒。目標是讓身體從休眠狀態達到「可安全承受衝擊」的預備狀態。</p>
+            </div>
+
+            <div class="article-block yellow">
+                <p class="article-paragraph">
+                    日間營養補給策略：素食主跑者Jo需嚴格避免油膩食物以防腸胃不適和炎症反應，主食依賴麵包、米飯及清淡烹調的蔬菜。午餐解決方案高度靈活：後勤車常提前抵達途經城鎮的餐館點菜並打包，隨後驅車返回隊伍行進路線上進行分發，以此最大化奔跑時間，減少停頓。
+                </p>
+            </div>
+
+            <div class="article-block blue">
+                <p class="article-paragraph">
+                    傍晚安全提速：基於中國部分國道缺乏照明的現實，團隊常在傍晚日落前主動提升配速，以確保在天黑前抵達安全區域或當日終點，這是基於風險評估的主動策略。
+                </p>
+            </div>
+
+            <div class="article-block green">
+                <p class="article-paragraph">
+                    到達後系統恢復：每日抵達住宿點後，執行非協商的恢復程序：雙腿交替冰敷（每次15分鐘，重複兩次）、將下肢抬高至超過心臟水平、使用氣壓腿套促進靜脈迴流及組織液排出。夜間睡眠時必須穿戴壓縮襪，次日晨起需檢查並記錄腿部腫脹消退情況，作為身體恢復的簡易指標。
+                </p>
+            </div>
+           
+             <figure class="article-image">
+                <img src="2.jpg" alt="跑步陣型">
+                <figcaption class="image-caption">Jo和范老師為主跑員領跑，帶著學生們在公路上跑步</figcaption>
+            </figure>
+
+
+
+
+
+
+
+            <h2 class="article-heading h2">公益延續：象徵物與行動的共同延伸</h2>
+           
+            <p class="article-paragraph">
+                團隊全程隨身背負著一雙未曾穿著使用的「乾淨跑鞋」。這並非備用裝備，而是一個持續的、具有儀式感的視覺象徵物，時刻提醒所有參與者此次奔跑的初衷——「為那些不能奔跑的人而跑」。
+            </p>
+           
+            <!-- 乾淨跑鞋圖（原第四張） -->
+            <figure class="article-image">
+                <img src="6.jpg" alt="團隊攜帶的乾淨跑鞋">
+                <figcaption class="image-caption">團隊全程攜帶的「乾淨跑鞋」，象徵著為不能奔跑的人而跑的初心</figcaption>
+            </figure>
+           
+            <p class="article-paragraph">
+                理念在抵達香港後即刻轉化為具體行動：團隊迅速組織了殘障人士與健全志願者共同參與的「同走山頂環線」活動。未來，計劃將進一步拓展至更多如昂坪、梅窩等地的無障礙遠足路線，其核心目標是讓行動不便者也能平等地享受香港的自然風光與戶外體驗。
+            </p>
+           
+            <!-- 大合照放在最後（使用原第一張較多人合影） -->
+            <figure class="article-image">
+                <img src="5.jpg" alt="越限跑團隊大合照">
+                <figcaption class="image-caption">越限跑全體團隊成員完成挑戰後的大合照</figcaption>
+            </figure>
+
+
+
+            <p class="article-paragraph lead">
+                結語：越限跑不僅是一場體能極限挑戰，更是對人類適應能力、團隊協作精神和社會責任感的深度探索。3394公里的每一步，都記錄著身體與意志的對話，團隊與環境的互動，以及個人挑戰與社會價值的連接。這場跨越中國東部的奔跑，最終抵達的不僅是地理上的香港，更是人類精神潛能的新邊界。
+            </p>
+           
+
+
+        </main>
+    </div>
+    <script>
+        // 滾動動畫觸發
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        // 初始化觀察器
+        document.addEventListener('DOMContentLoaded', () => {
+            // 觀察需要動畫的元素（新增 .route-table 和 .article-block 的父容器）
+            const animatedElements = document.querySelectorAll(
+                '.article-image, .article-chart, .article-quote, .stat-card, .timeline-item, .case-study, .route-table, .article-block, .video-placeholder'
+            );
+            animatedElements.forEach(element => observer.observe(element));
+        });
+    </script>
+</body>
+</html>
+```
