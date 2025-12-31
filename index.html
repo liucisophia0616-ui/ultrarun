@@ -609,53 +609,140 @@
                 路線延長的主要考量源於“旅遊跑”的構想。團隊明確希望納入四個地理與文化地標：泰山、南京長江大橋、黃山及沿海路段。為了抵達這些地點，路線從常規的約2500公里延伸至約3100公里。例如，在南京段，團隊為穿越長江大橋專門規劃了約4-5公里的路線。
             </p>
             
-            <!-- 路段劃分圖表放在這裡，這一段文字的前面 -->
+            
+
+            <!-- 路段劃分圖表2 -->
             <figure class="article-image">
-                <table class="route-table">
-                    <thead>
-                        <tr>
-                            <th>路段劃分</th>
-                            <th>起止點</th>
-                            <th>距離</th>
-                            <th>關鍵途經絕地區</th>
-                            <th>主要地形與核心挑戰</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>第一段</td>
-                            <td>北京—濟南</td>
-                            <td><span class="distance">約530公里 ↓</span></td>
-                            <td>北京、天津、河北</td>
-                            <td>華北平原，初期體能分配與節奏建立</td>
-                        </tr>
-                        <tr>
-                            <td>第二段</td>
-                            <td>濟南—南京</td>
-                            <td><span class="distance">約630公里 ↓</span></td>
-                            <td>泰安(泰山)、南京、宿遷</td>
-                            <td>引入鷂峯爬升(泰山)，過渡至江淮平原</td>
-                        </tr>
-                        <tr>
-                            <td>第三段</td>
-                            <td>南京—福州</td>
-                            <td><span class="distance">約950公里 ↓</span></td>
-                            <td>馬鞍山、黄山、南平</td>
-                            <td>江南丘陵至閩東山地，景觀爬升主要階段，地形最複雜</td>
-                        </tr>
-                        <tr>
-                            <td>第四段</td>
-                            <td>福州—香港</td>
-                            <td><span class="distance">約900公里 ↓</span></td>
-                            <td>泉州、廈門、潮山、深圳</td>
-                            <td>沿海丘陵與城市路段，應對濕熱氣候與交通，終點衝刺</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div style="overflow-x: auto; margin: 0 auto;">
+                    <table class="route-table">
+                        <thead>
+                            <tr>
+                                <th>路段劃分</th>
+                                <th>起止點</th>
+                                <th>距離</th>
+                                <th>關鍵途經地區</th>
+                                <th>主要地形與核心挑戰</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>第一段</td>
+                                <td>北京—濟南</td>
+                                <td><span class="distance">約530公里</span></td>
+                                <td>北京、天津、河北</td>
+                                <td>華北平原，初期體能分配與節奏建立</td>
+                            </tr>
+                            <tr>
+                                <td>第二段</td>
+                                <td>濟南—南京</td>
+                                <td><span class="distance">約630公里</span></td>
+                                <td>泰安（泰山）、南京、宿遷</td>
+                                <td>引入陡峭爬升（泰山），過渡至江淮平原</td>
+                            </tr>
+                            <tr>
+                                <td>第三段</td>
+                                <td>南京—福州</td>
+                                <td><span class="distance">約950公里</span></td>
+                                <td>馬鞍山、黃山、南平</td>
+                                <td>江南丘陵至閩東山地，景觀起伏最劇烈，地形最複雜</td>
+                            </tr>
+                            <tr>
+                                <td>第四段</td>
+                                <td>福州—香港</td>
+                                <td><span class="distance">約900公里</span></td>
+                                <td>泉州、廈門、潮州、深圳</td>
+                                <td>沿海丘陵與城市路段，應對濕熱氣候與交通干擾，終點衝刺</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <figcaption class="route-table-caption">路線規劃分布圖</figcaption>
             </figure>
 
+            <style>
+            /* 僅針對此表格的精細調整，避免全局污染 */
+                .route-table {
+                    width: 100%;
+                    max-width: 100%;
+                    border-collapse: collapse;
+                    margin: 2.5rem 0;
+                    background-color: #f8f9fa;
+                    border-radius: 8px;
+                    overflow: hidden;
+                    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+                    opacity: 0;
+                    transform: translateY(20px);
+                    transition: opacity 0.8s, transform 0.8s;
+                }
 
+                .route-table th,
+                .route-table td {
+                    padding: 1rem;
+                    text-align: left;
+                    border-bottom: 1px solid #eee;
+                    white-space: normal; /* 允許換行 */
+                    word-break: keep-all; /* 避免中文詞語被無端截斷 */
+                    line-height: 1.5;
+                }
+
+                .route-table th {
+                    background-color: #a8dadc;
+                    font-weight: 600;
+                    color: #1d3557;
+                    white-space: nowrap; /* 表頭不換行，確保可讀性 */
+                }
+
+                /* 列寬策略：重點保障「距離」與「起止點」清晰，長文本欄位自然折行 */
+                .route-table th:nth-child(1),
+                .route-table td:nth-child(1) {
+                    width: 10%;
+                    text-align: center;
+                }
+
+                .route-table th:nth-child(2),
+                .route-table td:nth-child(2) {
+                    width: 15%;
+                }
+
+                .route-table th:nth-child(3),
+                .route-table td:nth-child(3) {
+                    width: 12%;
+                    text-align: center;
+                }
+
+                .route-table th:nth-child(4),
+                .route-table td:nth-child(4) {
+                    width: 23%;
+                }
+
+                .route-table th:nth-child(5),
+                .route-table td:nth-child(5) {
+                    width: 40%;
+                }
+
+                .route-table tr:last-child td {
+                    border-bottom: none;
+                }
+
+                .route-table .distance {
+                    background-color: #e9f7ef;
+                    border-radius: 20px;
+                    padding: 0.4rem 0.8rem;
+                    display: inline-block;
+                    font-weight: 600;
+                    color: #27ae60;
+                    font-size: 0.95rem;
+                }
+
+                @media (max-width: 768px) {
+                    .route-table th:nth-child(4),
+                    .route-table td:nth-child(4),
+                    .route-table th:nth-child(5),
+                    .route-table td:nth-child(5) {
+                        white-space: normal;
+                }
+                    }
+            </style>
 
             <h3 class="article-heading h3">2. 路線設計的核心標準和原則</h3>
 
@@ -823,16 +910,33 @@
 
 
 
-
-
             <h2 class="article-heading h2">團隊策略：高負荷下的日常循環</h2>
            
             <h3 class="article-heading h3">1. 每日跑步陣營</h3>
            
             <p class="article-paragraph">
-                團隊採用「滾動前進」模式，每天分為三個跑步時段：清晨（2-3人小組）、上午（主力團隊）、下午（輪換團隊）。這種安排確保了24小時內始終有人在路上，同時讓每位成員有足夠的休息時間。
+                在漫長的奔跑序列中，先鋒的位置總是屬於Jo與範榮臻老師。他們作為一線跑者，領跑於隊伍的最前方。一輛補給車通常提前開路，既是移動的支援站，也是行進方向的流動座標。
             </p>
            
+            <p class="article-paragraph">
+                緊隨其後的，是學生跑者與其他參與者，其中也穿插著各個城市臨時加入的跑友——他們也許只陪跑一段路，卻為這段旅程注入了在地的、短暫而鮮活的氣息。
+            </p>
+
+            <p class="article-paragraph">
+                學生跑者們通常完成當日目標——10至15公里的路程後，便會有序撤回隨行車輛，切換狀態，投入書本與課程之中。奔跑於他們而言，是體能課，也是意志的修行；而車艙之內，則是移動課堂，是跋涉途中不曾間斷的成長線。
+            </p>
+
+            <p class="article-paragraph">
+                而Jo與範老師的身影，仍會繼續向前。日均六十公里的跑量，是他們的日常，也是這段旅途不變的節奏。
+            </p>
+
+            <figure class="article-image">
+                <img src="11.jpg" alt="跑步阵营图">
+                <figcaption class="image-caption">團隊跑步陣營圖</figcaption>
+            </figure>
+
+
+
             <h3 class="article-heading h3">2. 訓練與補給模式</h3>
            
             <!-- 色塊區別每個部分 -->
